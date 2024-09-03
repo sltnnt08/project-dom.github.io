@@ -32,71 +32,77 @@
     <script> 
 
         var listBarang = document.getElementById('listBarang');
-
+        var searchInput = document.getElementById('keyword'); 
+        var searchButton = document.getElementById('searchItem');  
+        
         var produk = [
             {
                 nama: "mouse keren",
                 deskripsi: "ini adalah mouse",
-                harga: 50.000,
+                harga: "200.000",
                 gambar: "img/genius.jpeg" 
             },
-           
             {
                 nama: "keyboard keren",
                 deskripsi: "ini adalah keyboard",
-                harga: 50.000,
+                harga: "170.000",
                 gambar: "img/logitek.jpg" 
             },
-
             {
                 nama: "mouse keren",
                 deskripsi: "ini adalah mouse",
-                harga: 50.000,
+                harga: "150.000",
                 gambar: "img/jerry.jpg" 
             },
-
             {
-                nama: "mouse keren",
-                deskripsi: "ini adalah mouse",
-                harga: 50.000,
+                nama: "Keyboard keren",
+                deskripsi: "Ini adalah keyboard",
+                harga: "100.000",
                 gambar: "img/msi.jpg" 
             }
         ];
-
         
-        function tampilkanProduk() {
-            produk.forEach(function(item) {
+        function tampilkanProduk(data) {
+            listBarang.innerHTML = ''; 
+            var row;
+            data.forEach(function(item, index) {
+                if (index % 3 === 0) {
+                    row = document.createElement('div');
+                    row.className = 'row';
+                    listBarang.appendChild(row);
+                }
+        
                 var col = document.createElement('div');
                 col.className = 'col-md-4';
-
+        
                 var card = document.createElement('div');
-                card.className = 'card mb-4 shadow-sm';
-
+                card.className = 'card mt-2';
+        
                 var img = document.createElement('img');
                 img.className = 'card-img-top';
-                img.src = item.gambar ;
+                img.src = item.gambar;
                 img.alt = item.nama;
-
+        
                 var cardBody = document.createElement('div');
                 cardBody.className = 'card-body';
-
+        
                 var title = document.createElement('h5');
                 title.className = 'card-title';
                 title.textContent = item.nama;
-
+        
                 var description = document.createElement('p');
                 description.className = 'card-text';
                 description.textContent = item.deskripsi;
-
+        
                 var price = document.createElement('p');
                 price.className = 'card-text';
                 price.textContent = item.harga;
-
+        
                 var button = document.createElement('a');
                 button.className = 'btn btn-primary';
                 button.textContent = 'Add To Cart';
                 button.href = '#';
-
+        
                 cardBody.appendChild(title);
                 cardBody.appendChild(description);
                 cardBody.appendChild(price);
@@ -104,12 +110,24 @@
                 card.appendChild(img);
                 card.appendChild(cardBody);
                 col.appendChild(card);
-
-                listBarang.appendChild(col);
+        
+                row.appendChild(col);
             });
         }
-
-        tampilkanProduk();
+        
+        function searchProduk(event) {
+            event.preventDefault(); 
+            var input = searchInput.value.toLowerCase(); 
+            var filteredProduk = produk.filter(function(item) {
+                return item.nama.toLowerCase().includes(input) || 
+                       item.deskripsi.toLowerCase().includes(input);
+            });
+            tampilkanProduk(filteredProduk);  
+        }
+        
+        searchButton.addEventListener('click', searchProduk);  
+        
+        tampilkanProduk(produk); 
     </script>
 </body>
 </html>
