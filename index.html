@@ -44,7 +44,7 @@
                
             ];
     
-            // Function to search items
+            
             function Cari(keyword) {
                 listBarang.innerHTML = "";
                 for (let i = 0; i < items.length; i++) {
@@ -73,14 +73,7 @@
                     button.addEventListener("click", tambahKeKeranjang);
                 });
             }
-    
-            // Event listener for search input
-            keywordInput.addEventListener("input", function() {
-                const keyword = keywordInput.value;
-                Cari(keyword);
-            });
-    
-            // Function to handle adding items to the cart (to be implemented)
+      
             function tambahKeKeranjang(event) {
                 event.preventDefault();
                 const itemId = event.target.getAttribute("data-id");
@@ -88,7 +81,7 @@
                 console.log("Item ditambahkan ke keranjang:", itemId);
             }
     
-            // Initial call to display all items
+            
             Cari("");
         });
     </script>
