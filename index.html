@@ -30,86 +30,68 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script> 
-
-        var listBarang = document.getElementById('listBarang');
-
-        var produk = [
-            {
-                nama: "mouse keren",
-                deskripsi: "ini adalah mouse",
-                harga: 50.000,
-                gambar: "img/genius.jpeg" 
-            },
-           
-            {
-                nama: "keyboard keren",
-                deskripsi: "ini adalah keyboard",
-                harga: 50.000,
-                gambar: "img/logitek.jpg" 
-            },
-
-            {
-                nama: "mouse keren",
-                deskripsi: "ini adalah mouse",
-                harga: 50.000,
-                gambar: "img/jerry.jpg" 
-            },
-
-            {
-                nama: "mouse keren",
-                deskripsi: "ini adalah mouse",
-                harga: 50.000,
-                gambar: "img/msi.jpg" 
+        document.addEventListener("DOMContentLoaded", function () {
+            const listBarang = document.getElementById("listBarang");
+            const formItem = document.getElementById("formItem");
+            const keywordInput = document.getElementById("keyword");
+            let totalBarangDiKeranjang = 0;
+    
+            var items = [
+                ['001', 'Keyboard Logitek', 800000, 'Keyboard yang mantap untuk kantoran', "img/logitek.jpg"],
+                ['002', 'Keyboard MSI', 450000, 'Keyboard gaming MSI mekanik terbaik untuk set gaming', 'img/msi.jpg'],
+                ['003', 'Mouse Genius', 60000, 'Mouse Genius biar lebih pintar dan cocok dibawa kemanapun', 'img/genius.jpeg'],
+                ['004', 'Mouse Jerry', 50000, 'Mouse kabel standar yang nyaman ditangan', 'img/jerry.jpg'],
+               
+            ];
+    
+            // Function to search items
+            function Cari(keyword) {
+                listBarang.innerHTML = "";
+                for (let i = 0; i < items.length; i++) {
+                    const item = items[i];
+                    if (item[1].toLowerCase().includes(keyword.toLowerCase())) {
+                        const card = document.createElement("div");
+                        card.classList.add("col-4", "mt-2");
+                        card.innerHTML = `
+                            <div class ="col-4 mt-2"> 
+                                <div class="card" style="width: 18rem;">
+                                    <img src="${item[4]}" class="card-img-top" height="200px" width="200px" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title" id="itemName">${item[1]}</h5>
+                                        <p class="card-text" id="itemDesc">${item[3]}</p>
+                                        <p class="card-text">Rp ${item[2]}</p>
+                                        <a href="#" class="btn btn-primary add-to-cart" data-id="${item[0]}">Add to cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        listBarang.appendChild(card);
+                    }
+                }
+                const btnTambahKeKeranjang = document.querySelectorAll(".add-to-cart");
+                btnTambahKeKeranjang.forEach(button => {
+                    button.addEventListener("click", tambahKeKeranjang);
+                });
             }
-        ];
-
-        
-        function tampilkanProduk() {
-            produk.forEach(function(item) {
-                var col = document.createElement('div');
-                col.className = 'col-md-4';
-
-                var card = document.createElement('div');
-                card.className = 'card mb-4 shadow-sm';
-
-                var img = document.createElement('img');
-                img.className = 'card-img-top';
-                img.src = item.gambar ;
-                img.alt = item.nama;
-
-                var cardBody = document.createElement('div');
-                cardBody.className = 'card-body';
-
-                var title = document.createElement('h5');
-                title.className = 'card-title';
-                title.textContent = item.nama;
-
-                var description = document.createElement('p');
-                description.className = 'card-text';
-                description.textContent = item.deskripsi;
-
-                var price = document.createElement('p');
-                price.className = 'card-text';
-                price.textContent = item.harga;
-
-                var button = document.createElement('a');
-                button.className = 'btn btn-primary';
-                button.textContent = 'Add To Cart';
-                button.href = '#';
-
-                cardBody.appendChild(title);
-                cardBody.appendChild(description);
-                cardBody.appendChild(price);
-                cardBody.appendChild(button);
-                card.appendChild(img);
-                card.appendChild(cardBody);
-                col.appendChild(card);
-
-                listBarang.appendChild(col);
+    
+            // Event listener for search input
+            keywordInput.addEventListener("input", function() {
+                const keyword = keywordInput.value;
+                Cari(keyword);
             });
-        }
-
-        tampilkanProduk();
+    
+            // Function to handle adding items to the cart (to be implemented)
+            function tambahKeKeranjang(event) {
+                event.preventDefault();
+                const itemId = event.target.getAttribute("data-id");
+                // Tambahkan logika untuk menambah barang ke keranjang
+                console.log("Item ditambahkan ke keranjang:", itemId);
+            }
+    
+            // Initial call to display all items
+            Cari("");
+        });
     </script>
+    
 </body>
 </html>
