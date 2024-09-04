@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Latihan DOM</title>
+    <title>Project dom</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" 
@@ -18,7 +18,7 @@
                 <input class="form-control mr-sm-2" type="search" placeholder="Search"  id="keyword" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchItem">Search</button>
             </form>
-            <button class="btn btn-primary" id="cart"><i class="fas fa-shopping-cart"></i>(0)</button>
+            <button class="btn btn-primary" id="cart"><i class="fas fa-shopping-cart"></i><span id="cartItemCount">(0)</span></button>
         </nav>
         <div class="row">
             <div class="row col-md-12 mt-2"  id="listBarang" >
@@ -28,6 +28,7 @@
     </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script> 
         document.addEventListener("DOMContentLoaded", function () {
@@ -87,7 +88,27 @@
                 console.log("Item ditambahkan ke keranjang:", itemId);
             }
     
-            
+            function tambahKeKeranjang(event) {
+                const itemId = event.target.getAttribute("data-id");
+                // untuk mencari item dari array items yang punya id yg sama dengan itemId
+                const item = items.find(item => item[0] === itemId);
+
+                if (totalBarangDiKeranjang < 9) {
+                    totalBarangDiKeranjang++;
+                } else {
+                    totalBarangDiKeranjang = `9+`;
+                }
+
+                document.getElementById("cartItemCount").textContent = `(${totalBarangDiKeranjang})`;
+                Swal.fire({
+                  icon: 'success',
+                title: 'Added to Cart!',
+                text: `${item[1]} has been entered into your shopping card.`,
+                showConfirmButton: false,
+                timer: 1000}
+                )
+            }
+
             Cari("");
         });
     </script>
